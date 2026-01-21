@@ -14,10 +14,22 @@ import warnings
 warnings.filterwarnings("ignore")
 
 BASE_DIR = Path(__file__).resolve().parent
-df = pd.read_csv(BASE_DIR / 'data' / 'TSLA-STOCK-2025-01-20-2026-01-20.csv')
+features = ['Open', 'High', 'Low', 'Close', 'Volume']
 
-plt.figure(figsize=(15, 5))
-plt.plot(df['Close'], label='Close Price History')
-plt.title('Tesla Stock Close Price History')
-plt.ylabel('Close Price USD ($)')
+def clean_stock_data(df):
+    df['Volume'] = (df['Volume']
+                .str.replace(',', '')
+                .astype(float))
+    return df
+
+df = pd.read_csv(BASE_DIR / 'data' / 'TSLA-STOCK-2025-01-20-2026-01-20.csv')
+df = clean_stock_data(df)
+
+plt.subplots(figsize=(20,10))
+
+for i, col in enumerate(features):
+    plt.subplot(2, 3, i+1)
+    sb.distplot(df[col])
+    plt.title(f'Distribution of {col}', fontsize=15)
+
 plt.show()
