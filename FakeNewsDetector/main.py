@@ -3,7 +3,6 @@ import pandas as pd
 import tensorflow as tf
 import keras
 from pathlib import Path
-from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
 from keras.layers import TextVectorization
 from keras.utils import pad_sequences
