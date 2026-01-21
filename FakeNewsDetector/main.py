@@ -79,3 +79,11 @@ model = keras.Sequential([
 
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 model.summary()
+
+history = model.fit(
+    training_sequences,
+    np.array(training_labels),
+    epochs=50,
+    validation_data=(testing_sequences, np.array(testing_labels)),
+    verbose=2
+)
