@@ -2,12 +2,14 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 import keras
+from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
 from keras.layers import TextVectorization
 from keras.utils import pad_sequences
 
-training_data = pd.read_csv('data/training.csv')
+BASE_DIR = Path(__file__).resolve().parent
+training_data = pd.read_csv(BASE_DIR / 'data' / 'training.csv')
 
 training_data = training_data.drop(['Unnamed: 0'], axis=1)
 
@@ -53,7 +55,7 @@ training_sequences = np.array(training_sequences)
 testing_sequences = np.array(testing_sequences)
 
 embedding_index = {}
-with open('data/glove.6B.50d.txt', encoding='utf8') as f:
+with open(BASE_DIR / 'data' / 'glove.6B.50d.txt', encoding='utf8') as f:
     for line in f:
         values = line.split()
         word = values[0]
@@ -74,3 +76,6 @@ model = keras.Sequential([
     keras.layers.LSTM(64),
     keras.layers.Dense(1, activation='sigmoid')
 ])
+
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.summary()
