@@ -13,3 +13,7 @@ from sklearn import metrics
 import warnings
 warnings.filterwarnings("ignore")
 
+BASE_DIR = Path(__file__).resolve().parent
+df = pd.read_csv(BASE_DIR / 'data' / 'TSLA-STOCK-2025-01-20-2026-01-20.csv')
+
+print(df.head())
