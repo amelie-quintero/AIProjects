@@ -207,4 +207,4 @@ marimo/_lsp/
 __marimo__/
 
 # GloVe word embeddings
-data/glove.68.*d.txt
+FakeNewsDetector/data/glove*.txt
