@@ -66,3 +66,11 @@ for word, i in word_index.items():
     if embedding_vector is not None:
         embedding_matrix[i] = embedding_vector
 
+model = keras.Sequential([
+    keras.layers.Embedding(vocab_size + 1, embedding_dim, weights=[embedding_matrix], input_length=max_length, trainable=False),
+    keras.layers.Dropout(0.2),
+    keras.layers.Conv1D(64, 5, activation='relu'),
+    keras.layers.MaxPooling1D(pool_size=4),
+    keras.layers.LSTM(64),
+    keras.layers.Dense(1, activation='sigmoid')
+])
