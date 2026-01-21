@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+import keras
 from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
 from keras.layers import TextVectorization
@@ -39,3 +40,29 @@ word_index = {word: idx for idx, word in enumerate(vocab)}
 vocab_size = len(vocab)
 
 sequences = vectorizer(tf.constant(title))
+
+padded_sequences = pad_sequences(sequences, padding=padding_type, truncating=trunc_type)
+
+split = int(test_portion * training_size)
+training_sequences = padded_sequences[split:training_size]
+testing_sequences = padded_sequences[0:split]
+training_labels = labels[split:training_size]
+testing_labels = labels[0:split]
+
+training_sequences = np.array(training_sequences)
+testing_sequences = np.array(testing_sequences)
+
+embedding_index = {}
+with open('data/glove.6B.50d.txt', encoding='utf8') as f:
+    for line in f:
+        values = line.split()
+        word = values[0]
+        coefs = np.asarray(values[1:], dtype='float32')
+        embedding_index[word] = coefs
+
+embedding_matrix = np.zeros((vocab_size + 1, embedding_dim))
+for word, i in word_index.items():
+    embedding_vector = embedding_index.get(word)
+    if embedding_vector is not None:
+        embedding_matrix[i] = embedding_vector
+
