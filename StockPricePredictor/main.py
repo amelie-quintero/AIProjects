@@ -16,4 +16,8 @@ warnings.filterwarnings("ignore")
 BASE_DIR = Path(__file__).resolve().parent
 df = pd.read_csv(BASE_DIR / 'data' / 'TSLA-STOCK-2025-01-20-2026-01-20.csv')
 
-print(df.head())
+plt.figure(figsize=(15, 5))
+plt.plot(df['Close'], label='Close Price History')
+plt.title('Tesla Stock Close Price History')
+plt.ylabel('Close Price USD ($)')
+plt.show()
