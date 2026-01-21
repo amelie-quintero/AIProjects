@@ -87,3 +87,15 @@ history = model.fit(
     validation_data=(testing_sequences, np.array(testing_labels)),
     verbose=2
 )
+
+sample1_title = ["Breaking news: New advancements in AI technology"]
+sample1_seq = vectorizer(tf.constant(sample1_title))
+sample1_padded = pad_sequences(sample1_seq, maxlen=max_length, padding=padding_type, truncating=trunc_type)
+prediction1 = model.predict(sample1_padded)
+print("Prediction1 (0 = Real, 1 = Fake):", prediction1[0][0])
+
+sample2_title = ["Karry to go to France in gesture of sympathy"]
+sample2_seq = vectorizer(tf.constant(sample2_title))
+sample2_padded = pad_sequences(sample2_seq, maxlen=max_length, padding=padding_type, truncating=trunc_type)
+prediction2 = model.predict(sample2_padded)
+print("Prediction2 (0 = Real, 1 = Fake):", prediction2[0][0])
